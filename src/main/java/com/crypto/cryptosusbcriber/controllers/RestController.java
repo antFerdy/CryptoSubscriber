@@ -22,7 +22,7 @@ public class RestController {
     @GetMapping("/api/best")
     public Flux<Map<String, List<Order>>> get10Best() { //TODO refactor to functional style
         Map<String, List<Order>> orders = df.values().stream().collect(Collectors.groupingBy(Order::getSide));
-        orders.get("Buy").sort((o1, o2) -> Float.compare(o1.getPrice(), o2.getPrice()));
+        orders.get("Buy").sort((o1, o2) -> Float.compare(o2.getPrice(), o1.getPrice()));
         orders.get("Sell").sort((o1, o2) -> Float.compare(o1.getPrice(), o2.getPrice()));
 
         List<Order> limitedOrders = orders.get("Buy").stream().limit(5).collect(Collectors.toList());
